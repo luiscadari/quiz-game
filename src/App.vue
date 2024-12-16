@@ -1,8 +1,5 @@
 <template>
-  <ScoreBoard />
-  <section class="score">
-    Jogador <span>0</span> x <span>0</span> Computador
-  </section>
+  <ScoreBoard :win-count="this.winCount" :lose-count="this.loseCount" />
   <template v-if="this.question">
     <h1 v-html="this.question"></h1>
     <template :key="index" v-for="(answer, index) in this.answers">
@@ -89,10 +86,11 @@ export default {
       }
       this.answerSubmitted = true;
       if (this.chosenAnswer !== this.correctAnswer) {
-        alert(`Você errou!`);
+        this.loseCount++;
         return;
       }
-      alert("Você acertou");
+      this.winCount++;
+      return;
     },
   },
   computed: {
