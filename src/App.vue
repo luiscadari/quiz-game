@@ -1,4 +1,5 @@
 <template>
+  <ScoreBoard />
   <section class="score">
     Jogador <span>0</span> x <span>0</span> Computador
   </section>
@@ -47,8 +48,13 @@
 </template>
 
 <script>
+import ScoreBoard from "@/components/ScoreBoard.vue";
+
 export default {
   name: "App",
+  components: {
+    ScoreBoard,
+  },
   data() {
     return {
       question: undefined,
@@ -56,6 +62,8 @@ export default {
       correctAnswer: undefined,
       chosenAnswer: undefined,
       answerSubmitted: false,
+      winCount: 0,
+      loseCount: 0,
     };
   },
   methods: {
