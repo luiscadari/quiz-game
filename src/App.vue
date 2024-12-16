@@ -23,18 +23,24 @@
 
   <section class="result" v-if="this.answerSubmitted">
     <template v-if="this.chosenAnswer == this.correctAnswer">
-      <h4>
-        &#9989; Parabéns, a resposta "{{ this.correctAnswer }}" está correta.
-      </h4>
+      <h4
+        v-html="
+          ' &#9989; Parabéns, a resposta: ' +
+          this.correctAnswer +
+          ' Esta correta!'
+        "
+      />
     </template>
     <template v-else>
-      <h4>
-        &#10060; Que pena, a resposta está errada. A resposta correta é "{{
-          this.correctAnswer
-        }}".
-      </h4>
+      <h4
+        v-html="
+          '&#10060; Que pena, a resposta está errada. A resposta correta é ' +
+          this.correctAnswer +
+          '.'
+        "
+      />
     </template>
-    <button @click="this.getNewQuestion()" class="send" type="button">
+    <button @click="getNewQuestion()" class="send" type="button">
       Próxima pergunta
     </button>
   </section>
@@ -53,8 +59,13 @@ export default {
     };
   },
   methods: {
-    getNewQuestion() {},
+    getNewQuestion() {
+      this.getQuestion();
+    },
     getQuestion() {
+      this.answerSubmitted = false;
+      this.chosenAnswer = undefined;
+      this.question = undefined;
       this.axios
         .get("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
         .then((response) => {
