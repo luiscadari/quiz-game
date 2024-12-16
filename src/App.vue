@@ -54,6 +54,16 @@ export default {
   },
   methods: {
     getNewQuestion() {},
+    getQuestion() {
+      this.axios
+        .get("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
+        .then((response) => {
+          this.question = response.data.results[0].question;
+          this.incorrectAnswers = response.data.results[0].incorrect_answers;
+          this.correctAnswer = response.data.results[0].correct_answer;
+          console.log(response.data);
+        });
+    },
     submitAnswer() {
       if (!this.chosenAnswer) {
         return alert("Escolha uma das opções!");
@@ -78,14 +88,7 @@ export default {
     },
   },
   created() {
-    this.axios
-      .get("https://opentdb.com/api.php?amount=10&category=18&type=multiple")
-      .then((response) => {
-        this.question = response.data.results[0].question;
-        this.incorrectAnswers = response.data.results[0].incorrect_answers;
-        this.correctAnswer = response.data.results[0].correct_answer;
-        console.log(response.data);
-      });
+    this.getQuestion();
   },
 };
 </script>
